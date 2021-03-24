@@ -1,10 +1,19 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import firebase from './firebase'
 import {useDatabasePush} from './database'
+import { AuthContext } from './auth'
 
 const NewComment = () => {
     const [, save] = useDatabasePush('comments')
     const [comment, setComment] = useState('')
+    const auth = useContext(AuthContext)
+
+    if (auth.user === null) {
+      return null
+    }
+
+    const { displayName } = auth.user
+    const [alternativeDisplayName] = auth.user.email.split('@')
     const createComment = () => {
       if (comment !== '') {
         save(
@@ -12,8 +21,8 @@ const NewComment = () => {
             content: comment,
             createdAt: firebase.database.ServerValue.TIMESTAMP,
             user: {
-              id: 1,
-              name: 'Danilo'
+              id: auth.user.uid,
+              name: displayName || alternativeDisplayName
             }
           }
         )

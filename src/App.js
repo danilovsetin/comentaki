@@ -1,33 +1,24 @@
 import React from 'react'
 import NewComment from './NewComment'
 import Comments from './Comments'
-
-/*firebase
-  .auth()
-  .createUserWithEmailAndPassword('danilo.setin@gmail.com','admin123')*/
-
-/*firebase.auth().onAuthStateChanged(user => {
-  if (user) {
-    console.log(user.displayName)
-    user.updateProfile({displayName: 'Danilo Setin'})    
-  }
-})*/
-
-
-
-
-
-
-
+import CreateUser from './CreateUser'
+import UserInfo from './UserInfo'
+import { AuthProvider } from './auth'
+import SignInUser from './SignInUser'
 
 
 function App() {    
   
   return (
-    <div>      
-      <NewComment />      
-      <Comments />      
-    </div>
+    <AuthProvider>
+      <div>      
+        <NewComment />      
+        <Comments />      
+        <CreateUser />
+        <UserInfo />
+        <SignInUser />
+      </div>
+    </AuthProvider>
   );
 }
 
